@@ -1,3 +1,17 @@
+/* ── BADGE TYPEWRITER ── */
+(function() {
+  const el = document.getElementById('badgeTyped');
+  if (!el) return;
+  const text = '500+ Premium Domains Available Now';
+  let i = 0;
+  function tick() {
+    el.textContent = text.slice(0, i + 1);
+    i++;
+    if (i < text.length) setTimeout(tick, 55);
+  }
+  setTimeout(tick, 500);
+})();
+
 /* ── NAV ── */
 const nav = document.getElementById('nav');
 if (nav) {

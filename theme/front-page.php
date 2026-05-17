@@ -5,7 +5,7 @@
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-glow2" aria-hidden="true"></div>
   <div class="hero-content">
-    <div class="hero-badge">500+ Premium Domains Available Now</div>
+    <div class="hero-terminal"><span class="terminal-prompt">&gt;</span> <span id="badgeTyped"></span><span class="badge-cursor">_</span></div>
     <h1>The Marketplace for<br><span class="gradient-text">Premium Domains.</span></h1>
     <p class="hero-sub">Discover, acquire, and own the most valuable domain names across AI, Finance, Technology, and beyond. Your brand starts here.</p>
 
