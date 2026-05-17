@@ -9,9 +9,12 @@
     <h1>The Marketplace for<br><span class="gradient-text">Premium Domains.</span></h1>
     <p class="hero-sub">Discover, acquire, and own the most valuable domain names across AI, Finance, Technology, and beyond. Your brand starts here.</p>
 
-    <div class="hero-search" role="search">
-      <input type="text" id="heroSearch" placeholder="Search domains, keywords, or categories..." aria-label="Search domains">
-      <button onclick="gmTriggerSearch()">Search</button>
+    <div class="search-wrap">
+      <div class="hero-search" role="search">
+        <input type="text" id="heroSearch" placeholder="Search domains, keywords, or categories..." aria-label="Search domains" autocomplete="off">
+        <button onclick="gmTriggerSearch()">Search</button>
+      </div>
+      <div class="search-dropdown" id="searchDropdown"></div>
     </div>
 
     <div class="hero-quick" aria-label="Popular categories">

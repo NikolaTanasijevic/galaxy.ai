@@ -119,6 +119,84 @@ function gmSortDomains(val) {
   cards.forEach(c => grid.appendChild(c));
 }
 
+/* ── SEARCH AUTOCOMPLETE ── */
+(function() {
+  const input    = document.getElementById('heroSearch');
+  const dropdown = document.getElementById('searchDropdown');
+  if (!input || !dropdown) return;
+
+  let debounceTimer;
+  let activeIndex = -1;
+
+  function highlight(text, term) {
+    if (!term) return text;
+    const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  function renderItems(items, term) {
+    if (!items.length) { close(); return; }
+    dropdown.innerHTML = items.map((item, i) =>
+      `<div class="sd-item" data-url="${item.url}" data-index="${i}">
+        <div>
+          <div class="sd-title">${highlight(item.title, term)}</div>
+          <div class="sd-meta"><span>${item.cat}</span></div>
+        </div>
+        <div class="sd-price">${item.price}</div>
+      </div>`
+    ).join('');
+    dropdown.querySelectorAll('.sd-item').forEach(el => {
+      el.addEventListener('mousedown', e => {
+        e.preventDefault();
+        window.location = el.dataset.url;
+      });
+    });
+    activeIndex = -1;
+    dropdown.classList.add('open');
+  }
+
+  function close() {
+    dropdown.classList.remove('open');
+    dropdown.innerHTML = '';
+    activeIndex = -1;
+  }
+
+  function suggest(term) {
+    fetch(`${gmAjax?.url ?? '/wp-admin/admin-ajax.php'}?action=gm_suggest&q=${encodeURIComponent(term)}`)
+      .then(r => r.json())
+      .then(res => { if (res.success) renderItems(res.data, term); });
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const val = input.value.trim();
+    if (val.length < 2) { close(); return; }
+    debounceTimer = setTimeout(() => suggest(val), 220);
+  });
+
+  input.addEventListener('keydown', e => {
+    const items = dropdown.querySelectorAll('.sd-item');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, items.length - 1);
+      items.forEach((el, i) => el.classList.toggle('active', i === activeIndex));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, -1);
+      items.forEach((el, i) => el.classList.toggle('active', i === activeIndex));
+    } else if (e.key === 'Enter' && activeIndex >= 0) {
+      e.preventDefault();
+      window.location = items[activeIndex].dataset.url;
+    } else if (e.key === 'Escape') {
+      close();
+    }
+  });
+
+  document.addEventListener('click', e => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) close();
+  });
+})();
+
 /* Init: search on Enter */
 document.addEventListener('DOMContentLoaded', () => {
   const heroInput = document.getElementById('heroSearch');

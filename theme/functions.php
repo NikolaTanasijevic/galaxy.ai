@@ -24,12 +24,10 @@ function gm_enqueue() {
 	wp_enqueue_style( 'gm-main', get_template_directory_uri() . '/assets/css/main.css', [ 'gm-fonts' ], '1.0.0' );
 	wp_enqueue_script( 'gm-main', get_template_directory_uri() . '/assets/js/main.js', [], '1.0.0', true );
 
-	if ( is_singular( 'domain' ) || is_post_type_archive( 'domain' ) || is_tax( 'domain_cat' ) ) {
-		wp_localize_script( 'gm-main', 'gmAjax', [
-			'url'   => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'gm_inquiry' ),
-		] );
-	}
+	wp_localize_script( 'gm-main', 'gmAjax', [
+		'url'   => admin_url( 'admin-ajax.php' ),
+		'nonce' => wp_create_nonce( 'gm_inquiry' ),
+	] );
 }
 
 add_action( 'init', 'gm_flush_rewrite_once' );
@@ -38,6 +36,56 @@ function gm_flush_rewrite_once() {
 		flush_rewrite_rules();
 		update_option( 'gm_flush_rewrite', '1' );
 	}
+}
+
+// AJAX search autocomplete
+add_action( 'wp_ajax_gm_suggest', 'gm_handle_suggest' );
+add_action( 'wp_ajax_nopriv_gm_suggest', 'gm_handle_suggest' );
+function gm_handle_suggest() {
+	$term = sanitize_text_field( $_GET['q'] ?? '' );
+	if ( strlen( $term ) < 2 ) {
+		wp_send_json_success( [] );
+	}
+
+	global $wpdb;
+	$like = '%' . $wpdb->esc_like( $term ) . '%';
+
+	$ids_by_title = $wpdb->get_col( $wpdb->prepare(
+		"SELECT ID FROM {$wpdb->posts}
+		 WHERE post_type = 'domain' AND post_status = 'publish'
+		 AND post_title LIKE %s
+		 LIMIT 8",
+		$like
+	) );
+
+	$ids_by_keywords = $wpdb->get_col( $wpdb->prepare(
+		"SELECT post_id FROM {$wpdb->postmeta}
+		 WHERE meta_key = 'gm_keywords' AND meta_value LIKE %s
+		 LIMIT 8",
+		$like
+	) );
+
+	$ids = array_unique( array_merge( $ids_by_title, $ids_by_keywords ) );
+	$ids = array_slice( $ids, 0, 6 );
+
+	if ( empty( $ids ) ) {
+		wp_send_json_success( [] );
+	}
+
+	$results = [];
+	foreach ( $ids as $id ) {
+		$terms    = get_the_terms( $id, 'domain_cat' );
+		$cat_name = $terms ? $terms[0]->name : '';
+		$price    = get_post_meta( $id, 'gm_price', true );
+		$results[] = [
+			'title' => get_the_title( $id ),
+			'url'   => get_permalink( $id ),
+			'cat'   => $cat_name,
+			'price' => $price ? '$' . number_format( (int) $price ) : 'Make Offer',
+		];
+	}
+
+	wp_send_json_success( $results );
 }
 
 // AJAX inquiry form handler
