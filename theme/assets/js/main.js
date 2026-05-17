@@ -9,12 +9,20 @@ const ham     = document.getElementById('ham');
 const mobMenu = document.getElementById('mobMenu');
 const mobClose = document.getElementById('mobClose');
 if (ham) {
-  ham.addEventListener('click', () => { mobMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  ham.addEventListener('click', () => {
+    mobMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    ham.style.visibility = 'hidden';
+  });
   mobClose.addEventListener('click', gmCloseMob);
   document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', gmCloseMob));
 }
 function gmCloseMob() {
-  if (mobMenu) { mobMenu.classList.remove('open'); document.body.style.overflow = ''; }
+  if (mobMenu) {
+    mobMenu.classList.remove('open');
+    document.body.style.overflow = '';
+    if (ham) ham.style.visibility = 'visible';
+  }
 }
 
 /* ── FADE IN ── */

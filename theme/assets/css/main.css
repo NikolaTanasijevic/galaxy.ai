@@ -66,8 +66,8 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
 .btn-nav-solid:hover{opacity:.88}
 
 .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.ham span{display:block;width:22px;height:1.5px;background:var(--text);transition:.3s}
-.mob-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:28px}
+.ham span{display:block;width:22px;height:1.5px;background:var(--grad);transition:.3s}
+.mob-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:101;flex-direction:column;align-items:center;justify-content:center;gap:28px}
 .mob-menu.open{display:flex}
 .mob-menu a{font-family:var(--font-h);font-size:28px;font-weight:700;color:var(--muted);transition:color .2s}
 .mob-menu a:hover{color:var(--text)}
