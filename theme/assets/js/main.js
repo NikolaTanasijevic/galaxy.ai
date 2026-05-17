@@ -208,6 +208,34 @@ document.addEventListener('DOMContentLoaded', () => {
   gmUpdateCount();
 });
 
+/* ── CONTACT PAGE FORM ── */
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    const data = new FormData(contactForm);
+    data.append('action', 'gm_contact');
+    fetch(gmAjax?.url ?? '/wp-admin/admin-ajax.php', { method: 'POST', body: data })
+      .then(r => r.json())
+      .then(res => {
+        const success = document.getElementById('contactFormSuccess');
+        if (res.success) {
+          contactForm.style.display = 'none';
+          success.textContent = res.data;
+          success.style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+          alert(res.data || 'Something went wrong.');
+        }
+      })
+      .catch(() => { btn.disabled = false; btn.textContent = 'Send Message'; });
+  });
+}
+
 /* ── INQUIRY FORM ── */
 const form = document.getElementById('inquiryForm');
 if (form) {

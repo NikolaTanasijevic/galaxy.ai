@@ -1,6 +1,7 @@
 <?php
 
 require_once get_template_directory() . '/inc/cpt.php';
+require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/category-meta.php';
 require_once get_template_directory() . '/inc/csv-import.php';
 require_once get_template_directory() . '/inc/schema.php';

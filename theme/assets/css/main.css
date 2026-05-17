@@ -51,17 +51,20 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
 .nav-links a:hover,.nav-links a.active{color:var(--text)}
 .nav-right{display:flex;align-items:center;gap:12px}
 .btn-nav-ghost{
-  border:1px solid var(--border);color:var(--muted);
+  border:1px solid rgba(248,250,252,.25);color:var(--text);
   padding:8px 18px;font-size:12px;letter-spacing:.08em;
   font-family:var(--font-b);background:transparent;cursor:pointer;
   transition:border-color .2s,color .2s;display:inline-block;
+  position:relative;overflow:hidden;
 }
-.btn-nav-ghost:hover{border-color:rgba(124,92,252,.5);color:var(--text)}
+.btn-nav-ghost:hover{border-color:rgba(124,92,252,.6);color:var(--purple2)}
 .btn-nav-solid{
   background:var(--grad);color:#fff;
   padding:8px 18px;font-size:12px;letter-spacing:.08em;
   font-family:var(--font-b);font-weight:500;border:none;cursor:pointer;
   transition:opacity .2s;display:inline-block;
+  position:relative;overflow:hidden;
+  animation:gm-pulse 2.4s ease-out infinite;
 }
 .btn-nav-solid:hover{opacity:.88}
 
@@ -148,6 +151,7 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
   background:var(--grad);border:none;cursor:pointer;
   padding:16px 28px;font-family:var(--font-b);font-size:13px;
   font-weight:500;color:#fff;letter-spacing:.06em;white-space:nowrap;transition:opacity .2s;
+  position:relative;overflow:hidden;
 }
 .hero-search button:hover{opacity:.88}
 
@@ -302,8 +306,17 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
   width:100%;background:var(--grad);color:#fff;border:none;
   padding:14px;font-family:var(--font-b);font-size:13px;
   font-weight:500;letter-spacing:.08em;cursor:pointer;transition:opacity .2s;
+  position:relative;overflow:hidden;
 }
 .btn-inquire:hover{opacity:.88}
+.btn-grad{
+  background:var(--grad);color:#fff;
+  padding:15px 40px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:500;font-family:var(--font-b);border:none;cursor:pointer;
+  transition:opacity .2s;display:inline-block;
+  position:relative;overflow:hidden;
+}
+.btn-grad:hover{opacity:.88}
 .inquiry-ext{display:block;text-align:center;margin-top:16px;font-size:12px;color:var(--dim)}
 .inquiry-ext a{color:var(--purple2);border-bottom:1px solid rgba(124,92,252,.3)}
 .form-success{display:none;padding:16px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#6ee7b7;font-size:13px;text-align:center}
@@ -362,6 +375,44 @@ footer{padding:60px 5% 28px;border-top:1px solid var(--border)}
 .page-wrap p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:20px}
 .page-wrap a{color:var(--purple2);border-bottom:1px solid rgba(124,92,252,.3);transition:border-color .2s}
 .page-wrap a:hover{border-color:var(--purple2)}
+
+/* ── CONTACT FORM ── */
+.gm-contact-form-wrap{margin-top:40px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+.gm-contact-form-wrap button[type="submit"]{
+  background:var(--grad)!important;color:#fff!important;border:none!important;
+  padding:14px 40px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:500;font-family:var(--font-b);cursor:pointer;transition:opacity .2s;
+  display:inline-block;margin-top:8px;
+}
+.gm-contact-form-wrap button[type="submit"]:hover{opacity:.88}
+
+/* ── SHIMMER & PULSE ── */
+.btn-nav-solid::after,
+.btn-nav-ghost::after,
+.btn-grad::after,
+.btn-inquire::after,
+.hero-search button::after,
+.gm-contact-form-wrap button[type="submit"]::after{
+  content:'';
+  position:absolute;top:0;left:-100%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.18) 50%,transparent 100%);
+  transform:skewX(-20deg);
+  animation:gm-shimmer 4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes gm-shimmer{
+  0%{left:-100%}
+  18%{left:160%}
+  100%{left:160%}
+}
+@keyframes gm-pulse{
+  0%{box-shadow:0 0 0 0 rgba(124,92,252,.55)}
+  65%{box-shadow:0 0 0 9px rgba(124,92,252,0)}
+  100%{box-shadow:0 0 0 0 rgba(124,92,252,0)}
+}
 
 /* ── ANIMATIONS ── */
 .fi{opacity:0;transform:translateY(18px);transition:opacity .65s,transform .65s}
