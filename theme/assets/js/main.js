@@ -120,9 +120,9 @@ function gmSortDomains(val) {
 }
 
 /* ── SEARCH AUTOCOMPLETE ── */
-(function() {
-  const input    = document.getElementById('heroSearch');
-  const dropdown = document.getElementById('searchDropdown');
+function gmInitAutocomplete(inputId, dropdownId) {
+  const input    = document.getElementById(inputId);
+  const dropdown = document.getElementById(dropdownId);
   if (!input || !dropdown) return;
 
   let debounceTimer;
@@ -135,7 +135,7 @@ function gmSortDomains(val) {
   }
 
   function renderItems(items, term) {
-    if (!items.length) { close(); return; }
+    if (!items.length) { closeDropdown(); return; }
     dropdown.innerHTML = items.map((item, i) =>
       `<div class="sd-item" data-url="${item.url}" data-index="${i}">
         <div>
@@ -146,16 +146,13 @@ function gmSortDomains(val) {
       </div>`
     ).join('');
     dropdown.querySelectorAll('.sd-item').forEach(el => {
-      el.addEventListener('mousedown', e => {
-        e.preventDefault();
-        window.location = el.dataset.url;
-      });
+      el.addEventListener('mousedown', e => { e.preventDefault(); window.location = el.dataset.url; });
     });
     activeIndex = -1;
     dropdown.classList.add('open');
   }
 
-  function close() {
+  function closeDropdown() {
     dropdown.classList.remove('open');
     dropdown.innerHTML = '';
     activeIndex = -1;
@@ -170,7 +167,7 @@ function gmSortDomains(val) {
   input.addEventListener('input', () => {
     clearTimeout(debounceTimer);
     const val = input.value.trim();
-    if (val.length < 2) { close(); return; }
+    if (val.length < 3) { closeDropdown(); return; }
     debounceTimer = setTimeout(() => suggest(val), 220);
   });
 
@@ -188,14 +185,17 @@ function gmSortDomains(val) {
       e.preventDefault();
       window.location = items[activeIndex].dataset.url;
     } else if (e.key === 'Escape') {
-      close();
+      closeDropdown();
     }
   });
 
   document.addEventListener('click', e => {
-    if (!input.contains(e.target) && !dropdown.contains(e.target)) close();
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) closeDropdown();
   });
-})();
+}
+
+gmInitAutocomplete('heroSearch', 'searchDropdown');
+gmInitAutocomplete('archiveSearch', 'archiveDropdown');
 
 /* Init: search on Enter */
 document.addEventListener('DOMContentLoaded', () => {

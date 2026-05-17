@@ -66,7 +66,17 @@ function gm_handle_suggest() {
 		$like
 	) );
 
-	$ids = array_unique( array_merge( $ids_by_title, $ids_by_keywords ) );
+	$ids_by_cat = $wpdb->get_col( $wpdb->prepare(
+		"SELECT DISTINCT tr.object_id
+		 FROM {$wpdb->term_relationships} tr
+		 INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+		 INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+		 WHERE tt.taxonomy = 'domain_cat' AND t.name LIKE %s
+		 LIMIT 8",
+		$like
+	) );
+
+	$ids = array_unique( array_merge( $ids_by_title, $ids_by_keywords, $ids_by_cat ) );
 	$ids = array_slice( $ids, 0, 6 );
 
 	if ( empty( $ids ) ) {

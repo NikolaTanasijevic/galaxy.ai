@@ -8,9 +8,12 @@
     </h1>
     <p class="cat-page-intro">Search and filter across our full inventory of premium domain names.</p>
 
-    <div class="hero-search" style="max-width:520px;margin:32px 0 0" role="search">
-      <input type="text" id="archiveSearch" placeholder="Search domains or keywords..." aria-label="Search">
-      <button onclick="gmArchiveSearch()">Search</button>
+    <div class="search-wrap" style="max-width:520px;margin:32px 0 0">
+      <div class="hero-search" role="search">
+        <input type="text" id="archiveSearch" placeholder="Search domains or keywords..." aria-label="Search" autocomplete="off">
+        <button onclick="gmArchiveSearch()">Search</button>
+      </div>
+      <div class="search-dropdown" id="archiveDropdown"></div>
     </div>
   </div>
 </section>
