@@ -31,6 +31,11 @@ function gm_enqueue() {
 	] );
 }
 
+add_action( 'wp_head', 'gm_favicon' );
+function gm_favicon() {
+	echo '<link rel="icon" type="image/svg+xml" href="' . get_template_directory_uri() . '/assets/favicon.svg">' . "\n";
+}
+
 add_action( 'init', 'gm_flush_rewrite_once' );
 function gm_flush_rewrite_once() {
 	if ( get_option( 'gm_flush_rewrite' ) !== '1' ) {
