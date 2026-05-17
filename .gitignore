@@ -1,0 +1,15 @@
+# Docker volumes (local only, not committed)
+# WordPress core files are in Docker volumes, not in this repo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Local environment overrides
+.env
+.env.local
