@@ -2,6 +2,11 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="gm-star-field" aria-hidden="true">
+    <div class="gm-sf-layer"></div>
+    <div class="gm-sf-layer"></div>
+    <div class="gm-sf-layer"></div>
+  </div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-glow2" aria-hidden="true"></div>
   <div class="hero-content">

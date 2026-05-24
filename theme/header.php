@@ -9,7 +9,7 @@
 <?php wp_body_open(); ?>
 
 <nav id="nav">
-  <a href="<?php echo home_url('/'); ?>" class="nav-logo">GALAXA<span class="dot"></span></a>
+  <a href="<?php echo home_url('/'); ?>" class="nav-logo">GALAXY<span class="dot"></span></a>
   <ul class="nav-links">
     <li><a href="<?php echo get_post_type_archive_link('domain'); ?>">Browse Domains</a></li>
     <li><a href="<?php echo home_url('/#how'); ?>">How It Works</a></li>
@@ -24,7 +24,10 @@
 </nav>
 
 <div class="mob-menu" id="mobMenu">
-  <span class="mob-close" id="mobClose">✕</span>
+  <div class="mob-header">
+    <a href="<?php echo home_url('/'); ?>" class="mob-logo">GALAXY<span class="dot"></span></a>
+    <span class="mob-close" id="mobClose">✕</span>
+  </div>
   <a href="<?php echo get_post_type_archive_link('domain'); ?>" class="mob-link">Browse Domains</a>
   <a href="<?php echo home_url('/#how'); ?>" class="mob-link">How It Works</a>
   <a href="<?php echo home_url('/about'); ?>" class="mob-link">About</a>
