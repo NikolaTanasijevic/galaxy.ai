@@ -1,7 +1,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="f-logo">GALAXY<span class="dot"></span></div>
+      <div class="f-logo">GALAXA<span class="dot"></span></div>
       <p>The world's most curated premium domain marketplace. Connecting buyers and sellers since 2019.</p>
     </div>
     <div class="footer-col">
