@@ -60,7 +60,7 @@
 <section class="categories" id="categories">
   <div style="max-width:1200px;margin:0 auto">
     <div class="section-eyebrow fi">Browse by category</div>
-    <h2 class="section-title fi d1">Nine curated<br>collections.</h2>
+    <h2 class="section-title fi d1">Curated<br>collections.</h2>
     <div class="cat-grid">
       <?php
       $all_cats = get_terms(['taxonomy' => 'domain_cat', 'hide_empty' => false]);
@@ -74,6 +74,7 @@
         'startup-brands' => '▲',
         'lifestyle'      => '◐',
         'contractors'    => '⬢',
+        'audio-music-tech' => '♫',
       ];
       foreach ($all_cats as $i => $cat) :
         $delay = $i < 2 ? '' : ($i < 4 ? ' d1' : ($i < 6 ? ' d2' : ($i < 8 ? ' d3' : ' d4')));
