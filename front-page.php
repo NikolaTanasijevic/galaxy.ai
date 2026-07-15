@@ -2,11 +2,18 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="gm-star-field" aria-hidden="true">
-    <div class="gm-sf-layer"></div>
-    <div class="gm-sf-layer"></div>
-    <div class="gm-sf-layer"></div>
-  </div>
+  <div class="gm-particles" aria-hidden="true" data-particles
+    data-colors="#9d7ffd,#22d3ee,#f8fafc"
+    data-count="160"
+    data-spread="10"
+    data-speed="0.08"
+    data-base-size="90"
+    data-size-randomness="1"
+    data-camera-distance="20"
+    data-hover="true"
+    data-hover-factor="0.6"
+    data-alpha="true"
+    data-rotation="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-glow2" aria-hidden="true"></div>
   <div class="hero-content">
