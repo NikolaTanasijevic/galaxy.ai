@@ -238,7 +238,7 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
 
 /* ── CATEGORIES ── */
 .categories{padding:80px 5%;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.cat-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:8px}
+.cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .cat-pill{
   padding:14px 12px;border:1px solid var(--border);
   text-align:center;cursor:pointer;
@@ -247,6 +247,9 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
 .cat-pill:hover,.cat-pill.active{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.08)}
 .cat-pill.active .cat-pill-name{color:var(--purple2)}
 .cat-icon{font-size:20px;margin-bottom:6px;display:block}
+/* homepage showcase cards are bigger than the compact filter pills on /domains/ */
+#categories .cat-pill{padding:32px 12px}
+#categories .cat-icon{font-size:24px;margin-bottom:10px}
 .cat-pill-name{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;font-weight:500}
 
 /* ── DOMAIN GRID & CARDS ── */
