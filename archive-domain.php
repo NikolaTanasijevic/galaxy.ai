@@ -38,6 +38,7 @@
         'lifestyle'      => '◐',
         'contractors'    => '⬢',
         'audio-music-tech' => '♫',
+        'automotive-mobility' => '⚙',
       ];
       foreach ($cats as $cat) :
         $icon = $cat_icons[$cat->slug] ?? '✦';

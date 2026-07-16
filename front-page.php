@@ -82,6 +82,7 @@
         'lifestyle'      => '◐',
         'contractors'    => '⬢',
         'audio-music-tech' => '♫',
+        'automotive-mobility' => '⚙',
       ];
       foreach ($all_cats as $i => $cat) :
         $delay = $i < 2 ? '' : ($i < 4 ? ' d1' : ($i < 6 ? ' d2' : ($i < 8 ? ' d3' : ' d4')));

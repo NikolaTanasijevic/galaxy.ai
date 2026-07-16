@@ -12,6 +12,7 @@ $cat_icons = [
   'lifestyle'      => '◐',
   'contractors'    => '⬢',
   'audio-music-tech' => '♫',
+  'automotive-mobility' => '⚙',
 ];
 $icon = $cat_icons[$term->slug] ?? '✦';
 $intro = get_term_meta($term->term_id, 'gm_cat_intro', true);
