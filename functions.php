@@ -5,6 +5,7 @@ require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/category-meta.php';
 require_once get_template_directory() . '/inc/csv-import.php';
 require_once get_template_directory() . '/inc/schema.php';
+require_once get_template_directory() . '/inc/security.php';
 
 add_action( 'after_setup_theme', 'gm_theme_setup' );
 function gm_theme_setup() {

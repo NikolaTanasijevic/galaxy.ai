@@ -128,21 +128,28 @@ function gmInitAutocomplete(inputId, dropdownId) {
   let debounceTimer;
   let activeIndex = -1;
 
+  function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
   function highlight(text, term) {
-    if (!term) return text;
-    const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-    return text.replace(re, '<mark>$1</mark>');
+    const safe = escapeHtml(text);
+    if (!term) return safe;
+    const re = new RegExp('(' + escapeHtml(term).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return safe.replace(re, '<mark>$1</mark>');
   }
 
   function renderItems(items, term) {
     if (!items.length) { closeDropdown(); return; }
     dropdown.innerHTML = items.map((item, i) =>
-      `<div class="sd-item" data-url="${item.url}" data-index="${i}">
+      `<div class="sd-item" data-url="${escapeHtml(item.url)}" data-index="${i}">
         <div>
           <div class="sd-title">${highlight(item.title, term)}</div>
-          <div class="sd-meta"><span>${item.cat}</span></div>
+          <div class="sd-meta"><span>${escapeHtml(item.cat)}</span></div>
         </div>
-        <div class="sd-price">${item.price}</div>
+        <div class="sd-price">${escapeHtml(item.price)}</div>
       </div>`
     ).join('');
     dropdown.querySelectorAll('.sd-item').forEach(el => {
