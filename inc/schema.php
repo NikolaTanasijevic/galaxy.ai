@@ -25,7 +25,7 @@ function gm_output_schema() {
 			'url'           => get_permalink( $post->ID ),
 			'seller'        => [
 				'@type' => 'Organization',
-				'name'  => 'Galaxa Media',
+				'name'  => 'Galaxy Media',
 				'url'   => home_url(),
 			],
 		],

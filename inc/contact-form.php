@@ -53,6 +53,6 @@ function gm_handle_contact() {
 	$headers = [ "Reply-To: {$name} <{$email}>", 'Content-Type: text/plain; charset=UTF-8' ];
 	$body    = "Name: {$name}\nEmail: {$email}\nSubject: {$subject}\n\nMessage:\n{$message}";
 
-	wp_mail( $to, "Galaxa Media Contact: {$subject}", $body, $headers );
+	wp_mail( $to, "Galaxy Media Contact: {$subject}", $body, $headers );
 	wp_send_json_success( "Thanks {$name}, your message has been sent. We'll get back to you within 1 business day." );
 }
