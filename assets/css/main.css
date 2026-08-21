@@ -278,6 +278,9 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
 .domain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--grad);opacity:0;transition:opacity .25s}
 .domain-card:hover::before{opacity:1}
 .domain-card.sold{opacity:.5;pointer-events:none}
+.domain-card.hold{opacity:.62}
+.domain-card.hold .dc-dot{background:#fbbf24}
+.domain-card.hold .dc-meta span:last-child{color:#fbbf24}
 
 .dc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px}
 .dc-cat{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:100px;font-weight:500;flex-shrink:0}

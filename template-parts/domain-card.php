@@ -16,8 +16,9 @@ $name_part   = $parts[0];
 $tld_part    = isset($parts[1]) ? '.' . $parts[1] : $tld;
 
 $is_sold = $status === 'sold';
+$is_hold = $status === 'on_hold';
 ?>
-<article class="domain-card fi<?php echo $is_sold ? ' sold' : ''; ?>"
+<article class="domain-card fi<?php echo $is_sold ? ' sold' : ''; ?><?php echo $is_hold ? ' hold' : ''; ?>"
   data-cat="<?php echo esc_attr($cat_slug); ?>"
   data-price="<?php echo esc_attr($price ?: '0'); ?>"
   onclick="window.location='<?php echo get_permalink($post_id); ?>'">
@@ -42,9 +43,11 @@ $is_sold = $status === 'sold';
       <?php endif; ?>
       <?php if ($is_sold) : ?>
       <span class="dc-dot"></span><span>Sold</span>
+      <?php elseif ($is_hold) : ?>
+      <span class="dc-dot"></span><span>On Hold</span>
       <?php endif; ?>
     </div>
-    <?php if (!$is_sold) : ?>
+    <?php if (!$is_sold && !$is_hold) : ?>
     <span class="dc-inquire">Inquire</span>
     <?php endif; ?>
   </div>

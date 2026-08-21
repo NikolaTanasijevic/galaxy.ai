@@ -1,7 +1,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="f-logo">GALAXY<span class="dot"></span></div>
+      <div class="f-logo">GALAXA<span class="dot"></span></div>
       <p>The world's most curated premium domain marketplace. Connecting buyers and sellers since 2019.</p>
     </div>
     <div class="footer-col">
@@ -19,7 +19,7 @@
     <div class="footer-col">
       <h4>Company</h4>
       <ul>
-        <li><a href="<?php echo home_url('/about'); ?>">About Galaxy</a></li>
+        <li><a href="<?php echo home_url('/about'); ?>">About Galaxa</a></li>
         <li><a href="<?php echo home_url('/#how'); ?>">How It Works</a></li>
         <li><a href="<?php echo home_url('/contact'); ?>">Contact Us</a></li>
         <li><a href="<?php echo home_url('/privacy-policy'); ?>">Privacy Policy</a></li>
@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; <?php echo date('Y'); ?> Galaxy Media. All rights reserved.</p>
+    <p>&copy; <?php echo date('Y'); ?> Galaxa Media. All rights reserved.</p>
     <div class="footer-social">
       <a href="#">Twitter</a>
       <a href="#">LinkedIn</a>

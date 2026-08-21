@@ -125,8 +125,8 @@ function gm_handle_inquiry() {
 	}
 
 	$subject = $bundle
-		? "Bundle Inquiry: {$bundle} — Galaxy Media"
-		: "Domain Inquiry: {$domain} — Galaxy Media";
+		? "Bundle Inquiry: {$bundle} — Galaxa Media"
+		: "Domain Inquiry: {$domain} — Galaxa Media";
 
 	$body = "Name: {$name}\nEmail: {$email}\n\n";
 	if ( $bundle ) $body .= "Bundle: {$bundle}\n";

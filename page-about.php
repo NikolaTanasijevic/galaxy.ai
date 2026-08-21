@@ -5,8 +5,8 @@ $raw = get_the_content();
 preg_match( '/<h1>(.*?)<\/h1>/s', $raw, $h1m );
 $hero_title = $h1m[1] ?? get_the_title();
 $hero_title = preg_replace(
-	'/Galaxy Media/',
-	'<span class="gradient-text">Galaxy Media</span>',
+	'/Galaxa Media/',
+	'<span class="gradient-text">Galaxa Media</span>',
 	$hero_title,
 	1
 );
