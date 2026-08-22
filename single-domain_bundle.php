@@ -3,6 +3,7 @@
 <?php
 $post_id    = get_the_ID();
 $domain_ids = get_post_meta($post_id, 'gm_bundle_domain_ids', true) ?: [];
+$price      = get_post_meta($post_id, 'gm_bundle_price', true);
 $content    = get_the_content();
 ?>
 
@@ -11,6 +12,9 @@ $content    = get_the_content();
   <div class="bundle-header">
     <div class="section-eyebrow">Portfolio Bundle</div>
     <h1><?php the_title(); ?></h1>
+    <div class="bundle-price">
+      <?php echo $price ? '$' . number_format((int) $price) : 'Make Offer'; ?>
+    </div>
     <?php if ($content) : ?>
     <div class="bundle-intro"><?php echo wp_kses_post($content); ?></div>
     <?php endif; ?>

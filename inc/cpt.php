@@ -92,6 +92,9 @@ function gm_domain_details_cb( $post ) {
 
 function gm_bundle_domains_cb( $post ) {
 	wp_nonce_field( 'gm_save_bundle', 'gm_bundle_nonce' );
+	$price = get_post_meta( $post->ID, 'gm_bundle_price', true );
+	echo '<p><label for="gm_bundle_price"><strong>Portfolio Price (USD, leave empty for "Make Offer")</strong></label><br>';
+	echo '<input type="number" id="gm_bundle_price" name="gm_bundle_price" value="' . esc_attr( $price ) . '" style="width:240px"></p>';
 	$saved = get_post_meta( $post->ID, 'gm_bundle_domain_ids', true ) ?: [];
 	$domains = get_posts( [ 'post_type' => 'domain', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ] );
 	echo '<p>Select which domains belong to this bundle:</p>';
@@ -133,4 +136,8 @@ function gm_save_bundle_meta( $post_id ) {
 
 	$ids = isset( $_POST['gm_bundle_domain_ids'] ) ? array_map( 'absint', $_POST['gm_bundle_domain_ids'] ) : [];
 	update_post_meta( $post_id, 'gm_bundle_domain_ids', $ids );
+
+	if ( isset( $_POST['gm_bundle_price'] ) ) {
+		update_post_meta( $post_id, 'gm_bundle_price', absint( $_POST['gm_bundle_price'] ) );
+	}
 }
