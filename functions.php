@@ -165,6 +165,8 @@ function gm_cat_class( $slug ) {
 		'startup-brands' => 'cat-startup',
 		'lifestyle'      => 'cat-lifestyle',
 		'contractors'    => 'cat-contractors',
+		'audio-music-tech'   => 'cat-audio',
+		'automotive-mobility' => 'cat-auto',
 	];
 	return $map[ $slug ] ?? 'cat-ai';
 }

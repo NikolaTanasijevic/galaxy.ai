@@ -136,6 +136,35 @@
   </div>
 </section>
 
+<?php
+$bundles = get_posts(['post_type' => 'domain_bundle', 'posts_per_page' => 3, 'orderby' => 'title', 'order' => 'ASC']);
+if ($bundles) :
+?>
+<!-- PORTFOLIO BUNDLES -->
+<section class="bundles" id="bundles">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-eyebrow fi">Sold as one</div>
+    <h2 class="section-title fi d1">Portfolio<br>bundles.</h2>
+    <div class="bundles-grid">
+      <?php foreach ($bundles as $b) :
+        $excerpt = wp_trim_words(wp_strip_all_tags($b->post_content), 26);
+        $domain_ids = get_post_meta($b->ID, 'gm_bundle_domain_ids', true) ?: [];
+      ?>
+      <a href="<?php echo get_permalink($b->ID); ?>" class="bundle-card fi">
+        <div class="section-eyebrow" style="margin-bottom:14px">Portfolio Bundle</div>
+        <h3 class="bundle-card-title"><?php echo esc_html($b->post_title); ?></h3>
+        <p class="bundle-card-desc"><?php echo esc_html($excerpt); ?></p>
+        <div class="bundle-card-footer">
+          <span><?php echo count($domain_ids); ?> domains</span>
+          <span class="dc-inquire">View Portfolio</span>
+        </div>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="how-inner">
