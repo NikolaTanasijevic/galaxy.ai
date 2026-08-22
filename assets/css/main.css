@@ -284,17 +284,17 @@ nav.sc{background:rgba(6,6,15,.92);backdrop-filter:blur(16px);border-color:var(-
 
 .dc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px}
 .dc-cat{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:100px;font-weight:500;flex-shrink:0}
+.cat-health{background:rgba(248,113,113,.14);color:#f87171}
+.cat-contractors{background:rgba(251,146,60,.14);color:#fb923c}
+.cat-audio{background:rgba(251,191,36,.14);color:#fbbf24}
+.cat-auto{background:rgba(163,230,53,.14);color:#a3e635}
+.cat-travel{background:rgba(52,211,153,.14);color:#34d399}
+.cat-finance{background:rgba(34,211,238,.14);color:#22d3ee}
+.cat-tech{background:rgba(96,165,250,.14);color:#60a5fa}
+.cat-startup{background:rgba(129,140,248,.16);color:#818cf8}
 .cat-ai{background:rgba(124,92,252,.15);color:var(--purple2)}
-.cat-finance{background:rgba(34,211,238,.12);color:#67e8f9}
-.cat-travel{background:rgba(52,211,153,.12);color:#6ee7b7}
-.cat-tech{background:rgba(125,211,252,.12);color:#7dd3fc}
-.cat-health{background:rgba(248,113,113,.12);color:#fca5a5}
-.cat-beauty{background:rgba(244,114,182,.12);color:#f9a8d4}
-.cat-startup{background:rgba(167,139,250,.15);color:#c4b5fd}
-.cat-lifestyle{background:rgba(232,121,249,.12);color:#e879f9}
-.cat-contractors{background:rgba(253,186,116,.12);color:#fdba74}
-.cat-audio{background:rgba(253,224,71,.12);color:#fde047}
-.cat-auto{background:rgba(190,242,100,.12);color:#bef264}
+.cat-lifestyle{background:rgba(232,121,249,.14);color:#e879f9}
+.cat-beauty{background:rgba(244,114,182,.14);color:#f472b6}
 
 .dc-price{font-family:var(--font-h);font-weight:700;font-size:14px;color:var(--text);text-align:right;flex-shrink:0}
 .dc-price.make-offer{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--purple2);background:rgba(124,92,252,.1);padding:3px 10px;border-radius:100px;font-weight:500}
