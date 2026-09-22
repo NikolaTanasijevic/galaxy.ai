@@ -85,6 +85,7 @@ add_filter( 'manage_gm_inquiry_posts_columns', function () {
 		'gm_buyer' => 'Buyer',
 		'gm_terms' => 'Terms version',
 		'gm_ack'   => 'Acknowledgment',
+		'gm_mail'  => 'Emails',
 		'date'     => 'Date',
 	];
 } );
@@ -98,6 +99,9 @@ add_action( 'manage_gm_inquiry_posts_custom_column', function ( $col, $id ) {
 			break;
 		case 'gm_terms':
 			echo esc_html( get_post_meta( $id, 'gm_terms_version', true ) );
+			break;
+		case 'gm_mail':
+			echo 'Admin: ' . esc_html( get_post_meta( $id, 'gm_admin_mail', true ) ?: '-' ) . '<br>Buyer: ' . esc_html( get_post_meta( $id, 'gm_buyer_mail', true ) ?: '-' );
 			break;
 		case 'gm_ack':
 			echo esc_html( get_post_meta( $id, 'gm_ack', true ) );
@@ -118,6 +122,8 @@ add_action( 'add_meta_boxes_gm_inquiry', function () {
 			'Acknowledgment'      => 'gm_ack',
 			'Acknowledgment text' => 'gm_ack_text',
 			'IP address'          => 'gm_ip',
+			'Admin email'         => 'gm_admin_mail',
+			'Buyer email'         => 'gm_buyer_mail',
 			'Message'             => 'gm_message',
 		];
 		echo '<table class="widefat striped"><tbody>';
@@ -127,3 +133,19 @@ add_action( 'add_meta_boxes_gm_inquiry', function () {
 		echo '</tbody></table>';
 	}, 'gm_inquiry', 'normal', 'high' );
 } );
+
+// ── Email delivery status, so a failed send is visible on the record ──
+// wp_mail() returns false only when the server refuses to hand the message off. A "sent"
+// status that never arrives means the recipient's mail provider dropped it (e.g. no SPF/DKIM).
+$GLOBALS['gm_last_mail_error'] = '';
+add_action( 'wp_mail_failed', function ( $error ) {
+	$GLOBALS['gm_last_mail_error'] = $error->get_error_message();
+} );
+
+function gm_log_inquiry_mail( $ref, $who, $sent ) {
+	$found = get_posts( [ 'post_type' => 'gm_inquiry', 'title' => $ref, 'post_status' => 'any', 'posts_per_page' => 1, 'fields' => 'ids' ] );
+	if ( ! $found ) return;
+	$status = $sent ? 'Sent' : 'FAILED: ' . ( $GLOBALS['gm_last_mail_error'] ?: 'unknown error' );
+	update_post_meta( $found[0], "gm_{$who}_mail", $status );
+	$GLOBALS['gm_last_mail_error'] = '';
+}

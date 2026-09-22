@@ -43,11 +43,14 @@ function gm_favicon() {
 
 add_action( 'init', 'gm_flush_rewrite_once' );
 function gm_flush_rewrite_once() {
-	// Bump the value whenever a deploy adds new URLs (CPT archives, etc.), so every
-	// environment regenerates its rewrite rules once on its own after the code lands.
-	if ( get_option( 'gm_flush_rewrite' ) !== '2' ) {
+	// Bump the value whenever a deploy adds new URLs (CPT archives, etc.) or follows a DB
+	// import, so every environment regenerates its rewrite rules and drops its persistent
+	// object cache once on its own (Hostinger's object cache survives DB imports and
+	// otherwise keeps serving pre-import post meta).
+	if ( get_option( 'gm_flush_rewrite' ) !== '3' ) {
 		flush_rewrite_rules();
-		update_option( 'gm_flush_rewrite', '2' );
+		wp_cache_flush();
+		update_option( 'gm_flush_rewrite', '3' );
 	}
 }
 
@@ -151,8 +154,8 @@ function gm_handle_inquiry() {
 	$to      = get_option( 'admin_email' );
 	$headers = [ "Reply-To: {$name} <{$email}>", 'Content-Type: text/plain; charset=UTF-8' ];
 
-	wp_mail( $to, $subject, $body, $headers );
-	gm_send_buyer_confirmation( $email, $name, $ref, $bundle ?: $domain );
+	gm_log_inquiry_mail( $ref, 'admin', wp_mail( $to, $subject, $body, $headers ) );
+	gm_log_inquiry_mail( $ref, 'buyer', gm_send_buyer_confirmation( $email, $name, $ref, $bundle ?: $domain ) );
 	wp_send_json_success( 'Your inquiry has been sent. We\'ll be in touch within 4 business hours. A confirmation with a copy of our Terms has been sent to your email.' );
 }
 
