@@ -419,6 +419,10 @@ footer{padding:60px 5% 28px;border-top:1px solid var(--border)}
 .footer-disclaimer{font-size:13px;line-height:1.65;color:var(--muted);max-width:900px;margin:0 0 20px}
 .footer-disclaimer a,.inquiry-disclaimer a{color:var(--purple2);border-bottom:1px solid rgba(124,92,252,.3)}
 .inquiry-disclaimer{font-size:12.5px;line-height:1.6;color:var(--muted);margin:4px 0 16px}
+.inquiry-ack{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.55;color:var(--muted);margin:6px 0 12px;cursor:pointer;padding:10px;border:1px solid transparent;transition:border-color .2s}
+.inquiry-ack input{margin-top:3px;flex-shrink:0;width:16px;height:16px;accent-color:var(--purple)}
+.inquiry-ack .ack-required{color:var(--purple2)}
+.inquiry-ack.ack-error{border-color:#f47b8a;background:rgba(244,123,138,.06)}
 .footer-social{display:flex;gap:20px}
 .footer-social a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);transition:color .2s}
 .footer-social a:hover{color:var(--purple2)}

@@ -79,12 +79,25 @@ $long_desc   = get_the_content();
     </div>
 
     <div class="inquiry-sidebar">
-      <?php
+      <?php if ($portfolio = gm_domain_portfolio($post_id)) :
+        $pf_price = get_post_meta($portfolio->ID, 'gm_bundle_price', true);
+      ?>
+      <div class="inquiry-box">
+        <div class="section-eyebrow" style="margin-bottom:14px">Portfolio Only</div>
+        <h3>Available exclusively as part of the <?php echo esc_html($portfolio->post_title); ?></h3>
+        <p>This domain is not sold individually. Inquire about the full portfolio to acquire it.</p>
+        <?php if ($pf_price) : ?>
+        <div class="bundle-price" style="margin-bottom:20px"><?php echo '$' . number_format((int) $pf_price); ?></div>
+        <?php endif; ?>
+        <p class="inquiry-disclaimer"><?php echo esc_html(gm_short_disclaimer()); ?> <a href="<?php echo home_url('/terms-of-use'); ?>" target="_blank" rel="noopener">Terms of Use</a></p>
+        <a href="<?php echo get_permalink($portfolio->ID); ?>" class="btn-inquire" style="display:block;text-align:center">View Portfolio &amp; Inquire</a>
+      </div>
+      <?php else :
       get_template_part('template-parts/inquiry-form', null, [
         'domain_title' => $domain_name,
         'listing_url'  => $listing_url,
       ]);
-      ?>
+      endif; ?>
     </div>
   </div>
 

@@ -6,7 +6,7 @@
     <h1 style="font-family:var(--font-h);font-weight:700;font-size:clamp(36px,5vw,60px);letter-spacing:-.02em">
       Browse All <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Premium Domains</span>
     </h1>
-    <p class="cat-page-intro">Search and filter across our full inventory of premium domain names.</p>
+    <p class="cat-page-intro">Search and filter across our full inventory of premium domain names. Looking for grouped collections? <a href="<?php echo get_post_type_archive_link('domain_bundle'); ?>" style="color:var(--purple2);border-bottom:1px solid rgba(124,92,252,.3)">Browse domain portfolios &rarr;</a></p>
 
     <div class="search-wrap" style="max-width:520px;margin:32px 0 0">
       <div class="hero-search" role="search">

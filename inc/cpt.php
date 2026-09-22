@@ -43,7 +43,7 @@ function gm_register_cpt_domain() {
 			'edit_item'     => 'Edit Bundle',
 		],
 		'public'       => true,
-		'has_archive'  => false,
+		'has_archive'  => true,
 		'rewrite'      => [ 'slug' => 'portfolio', 'with_front' => false ],
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-portfolio',

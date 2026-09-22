@@ -6,6 +6,7 @@ require_once get_template_directory() . '/inc/category-meta.php';
 require_once get_template_directory() . '/inc/csv-import.php';
 require_once get_template_directory() . '/inc/schema.php';
 require_once get_template_directory() . '/inc/security.php';
+require_once get_template_directory() . '/inc/inquiry-records.php';
 
 add_action( 'after_setup_theme', 'gm_theme_setup' );
 function gm_theme_setup() {
@@ -23,11 +24,11 @@ function gm_theme_setup() {
 add_action( 'wp_enqueue_scripts', 'gm_enqueue' );
 function gm_enqueue() {
 	wp_enqueue_style( 'gm-fonts', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500&display=swap', [], null );
-	wp_enqueue_style( 'gm-main', get_template_directory_uri() . '/assets/css/main.css', [ 'gm-fonts' ], '1.0.0' );
+	wp_enqueue_style( 'gm-main', get_template_directory_uri() . '/assets/css/main.css', [ 'gm-fonts' ], filemtime( get_template_directory() . '/assets/css/main.css' ) );
 	if ( is_front_page() ) {
 		wp_enqueue_script( 'gm-particles', get_template_directory_uri() . '/assets/js/particles.js', [], '1.0.0', true );
 	}
-	wp_enqueue_script( 'gm-main', get_template_directory_uri() . '/assets/js/main.js', [], '1.0.0', true );
+	wp_enqueue_script( 'gm-main', get_template_directory_uri() . '/assets/js/main.js', [], filemtime( get_template_directory() . '/assets/js/main.js' ), true );
 
 	wp_localize_script( 'gm-main', 'gmAjax', [
 		'url'   => admin_url( 'admin-ajax.php' ),
@@ -42,9 +43,11 @@ function gm_favicon() {
 
 add_action( 'init', 'gm_flush_rewrite_once' );
 function gm_flush_rewrite_once() {
-	if ( get_option( 'gm_flush_rewrite' ) !== '1' ) {
+	// Bump the value whenever a deploy adds new URLs (CPT archives, etc.), so every
+	// environment regenerates its rewrite rules once on its own after the code lands.
+	if ( get_option( 'gm_flush_rewrite' ) !== '2' ) {
 		flush_rewrite_rules();
-		update_option( 'gm_flush_rewrite', '1' );
+		update_option( 'gm_flush_rewrite', '2' );
 	}
 }
 
@@ -101,7 +104,7 @@ function gm_handle_suggest() {
 			'title' => get_the_title( $id ),
 			'url'   => get_permalink( $id ),
 			'cat'   => $cat_name,
-			'price' => $price ? '$' . number_format( (int) $price ) : 'Make Offer',
+			'price' => gm_domain_portfolio( $id ) ? 'Portfolio Only' : ( $price ? '$' . number_format( (int) $price ) : 'Make Offer' ),
 		];
 	}
 
@@ -123,6 +126,17 @@ function gm_handle_inquiry() {
 	if ( ! $email || ! $name ) {
 		wp_send_json_error( 'Please fill in all required fields.' );
 	}
+	if ( ( $_POST['gm_ack'] ?? '' ) !== '1' ) {
+		wp_send_json_error( 'Please confirm the acknowledgment before sending your inquiry.' );
+	}
+
+	$ref = gm_record_inquiry( [
+		'name'    => $name,
+		'email'   => $email,
+		'domain'  => $domain,
+		'bundle'  => $bundle,
+		'message' => $message,
+	] );
 
 	$subject = $bundle
 		? "Bundle Inquiry: {$bundle} — Galaxa Media"
@@ -131,13 +145,15 @@ function gm_handle_inquiry() {
 	$body = "Name: {$name}\nEmail: {$email}\n\n";
 	if ( $bundle ) $body .= "Bundle: {$bundle}\n";
 	if ( $domain ) $body .= "Domain: {$domain}\n";
-	$body .= "\nMessage:\n{$message}";
+	$body .= "\nMessage:\n{$message}\n\n";
+	$body .= "Reference: {$ref}\nTerms version accepted: " . GM_TERMS_VERSION . "\nBuyer acknowledgment: Accepted";
 
 	$to      = get_option( 'admin_email' );
 	$headers = [ "Reply-To: {$name} <{$email}>", 'Content-Type: text/plain; charset=UTF-8' ];
 
 	wp_mail( $to, $subject, $body, $headers );
-	wp_send_json_success( 'Your inquiry has been sent. We\'ll be in touch within 4 business hours.' );
+	gm_send_buyer_confirmation( $email, $name, $ref, $bundle ?: $domain );
+	wp_send_json_success( 'Your inquiry has been sent. We\'ll be in touch within 4 business hours. A confirmation with a copy of our Terms has been sent to your email.' );
 }
 
 // Helper: get domain meta
@@ -149,6 +165,7 @@ function gm_domain_meta( $post_id, $key, $default = '' ) {
 // Helper: format price
 function gm_format_price( $post_id ) {
 	$price = gm_domain_meta( $post_id, 'gm_price' );
+	if ( gm_domain_portfolio( $post_id ) ) return '<span class="dc-price make-offer">Portfolio Only</span>';
 	if ( ! $price ) return '<span class="dc-price make-offer">Make Offer</span>';
 	return '<span class="dc-price">$' . number_format( (int) $price ) . '</span>';
 }
@@ -175,4 +192,20 @@ function gm_cat_class( $slug ) {
 // footer and next to every inquiry action; the full version lives on the Terms of Use page.
 function gm_short_disclaimer() {
 	return 'Domain names are sold without representation or warranty as to trademark availability or suitability for any particular use. Categories, descriptions, and suggested uses are illustrative only. Buyers are responsible for conducting their own trademark, legal, and business due diligence before purchase and use.';
+}
+
+// A domain is "portfolio only" when it belongs to a bundle and has no individual price.
+// Returns the bundle post, or null.
+function gm_domain_portfolio( $post_id ) {
+	static $map = null;
+	if ( $map === null ) {
+		$map = [];
+		foreach ( get_posts( [ 'post_type' => 'domain_bundle', 'posts_per_page' => -1 ] ) as $b ) {
+			foreach ( (array) get_post_meta( $b->ID, 'gm_bundle_domain_ids', true ) as $did ) {
+				$map[ (int) $did ] = $b;
+			}
+		}
+	}
+	if ( ! isset( $map[ $post_id ] ) || gm_domain_meta( $post_id, 'gm_price' ) ) return null;
+	return $map[ $post_id ];
 }

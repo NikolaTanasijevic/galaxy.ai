@@ -12,6 +12,7 @@
   <a href="<?php echo home_url('/'); ?>" class="nav-logo">GALAXA<span class="dot"></span></a>
   <ul class="nav-links">
     <li><a href="<?php echo get_post_type_archive_link('domain'); ?>">Browse Domains</a></li>
+    <li><a href="<?php echo get_post_type_archive_link('domain_bundle'); ?>">Portfolios</a></li>
     <li><a href="<?php echo home_url('/#how'); ?>">How It Works</a></li>
     <li><a href="<?php echo home_url('/about'); ?>">About</a></li>
     <li><a href="<?php echo home_url('/contact'); ?>">Contact</a></li>
@@ -29,6 +30,7 @@
     <span class="mob-close" id="mobClose">✕</span>
   </div>
   <a href="<?php echo get_post_type_archive_link('domain'); ?>" class="mob-link">Browse Domains</a>
+  <a href="<?php echo get_post_type_archive_link('domain_bundle'); ?>" class="mob-link">Portfolios</a>
   <a href="<?php echo home_url('/#how'); ?>" class="mob-link">How It Works</a>
   <a href="<?php echo home_url('/about'); ?>" class="mob-link">About</a>
   <a href="<?php echo home_url('/contact'); ?>" class="mob-link">Contact</a>

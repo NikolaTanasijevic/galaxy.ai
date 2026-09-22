@@ -248,6 +248,12 @@ const form = document.getElementById('inquiryForm');
 if (form) {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const ack = form.querySelector('input[name="gm_ack"]');
+    if (ack && !ack.checked) {
+      ack.closest('.inquiry-ack').classList.add('ack-error');
+      ack.focus();
+      return;
+    }
     const btn = form.querySelector('.btn-inquire');
     btn.disabled = true;
     btn.textContent = 'Sending…';
@@ -278,3 +284,8 @@ if (form) {
     });
   });
 }
+
+// Clear the acknowledgment error highlight as soon as the box is checked.
+document.querySelectorAll('.inquiry-ack input').forEach(cb =>
+  cb.addEventListener('change', () => cb.closest('.inquiry-ack').classList.remove('ack-error'))
+);
