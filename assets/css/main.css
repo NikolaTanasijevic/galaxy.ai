@@ -416,6 +416,9 @@ footer{padding:60px 5% 28px;border-top:1px solid var(--border)}
 .footer-col ul a:hover{color:var(--purple2)}
 .footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .footer-bottom p{font-size:12px;color:var(--dim)}
+.footer-disclaimer{font-size:13px;line-height:1.65;color:var(--muted);max-width:900px;margin:0 0 20px}
+.footer-disclaimer a,.inquiry-disclaimer a{color:var(--purple2);border-bottom:1px solid rgba(124,92,252,.3)}
+.inquiry-disclaimer{font-size:12.5px;line-height:1.6;color:var(--muted);margin:4px 0 16px}
 .footer-social{display:flex;gap:20px}
 .footer-social a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);transition:color .2s}
 .footer-social a:hover{color:var(--purple2)}

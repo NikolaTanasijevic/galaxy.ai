@@ -28,6 +28,7 @@ $listing_url  = isset($args['listing_url']) ? $args['listing_url'] : '';
       <label for="buyer_message">Message</label>
       <textarea id="buyer_message" name="buyer_message" rows="4" placeholder="Tell us about your intended use or make an offer..."></textarea>
     </div>
+    <p class="inquiry-disclaimer"><?php echo esc_html(gm_short_disclaimer()); ?> <a href="<?php echo home_url('/terms-of-use'); ?>" target="_blank" rel="noopener">Terms of Use</a></p>
     <button type="submit" class="btn-inquire">Send Inquiry</button>
   </form>
 

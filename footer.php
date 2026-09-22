@@ -23,6 +23,7 @@
         <li><a href="<?php echo home_url('/#how'); ?>">How It Works</a></li>
         <li><a href="<?php echo home_url('/contact'); ?>">Contact Us</a></li>
         <li><a href="<?php echo home_url('/privacy-policy'); ?>">Privacy Policy</a></li>
+        <li><a href="<?php echo home_url('/terms-of-use'); ?>">Terms of Use</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -37,6 +38,7 @@
       </ul>
     </div>
   </div>
+  <p class="footer-disclaimer"><?php echo esc_html(gm_short_disclaimer()); ?> <a href="<?php echo home_url('/terms-of-use'); ?>">Terms of Use</a></p>
   <div class="footer-bottom">
     <p>&copy; <?php echo date('Y'); ?> Galaxa Media. All rights reserved.</p>
     <div class="footer-social">

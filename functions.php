@@ -170,3 +170,9 @@ function gm_cat_class( $slug ) {
 	];
 	return $map[ $slug ] ?? 'cat-ai';
 }
+
+// Trademark / buyer-protection disclaimer, per client's Developer Notes. Shown in the
+// footer and next to every inquiry action; the full version lives on the Terms of Use page.
+function gm_short_disclaimer() {
+	return 'Domain names are sold without representation or warranty as to trademark availability or suitability for any particular use. Categories, descriptions, and suggested uses are illustrative only. Buyers are responsible for conducting their own trademark, legal, and business due diligence before purchase and use.';
+}
